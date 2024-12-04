@@ -1,8 +1,13 @@
+import Link from 'next/link'
+import Button from '@mui/material/Button';
+import homePage from './page.module.scss'; // Import css modules stylesheet as styles
 
 export default function Home() {
   return (
-    <div className="title">
-      Hello World
-    </div>
+    <main className={homePage.pageContainer}>
+      <Link href="/interview-creation/step1">
+        <Button className={homePage.startInterview}>Add Interview</Button>
+      </Link>
+    </main>
   );
 }

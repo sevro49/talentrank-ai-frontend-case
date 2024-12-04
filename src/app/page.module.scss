@@ -1,0 +1,21 @@
+@use '@/styles/variables.scss' as *;
+
+.pageContainer {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: $main-bg;
+
+  .startInterview {
+    background: linear-gradient(to right, $btn-gradient-start, $btn-gradient-end);
+    color: #fff;
+    padding: 1rem 2rem;
+
+    &:hover {
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      transition: all 0.5s ease;
+    }
+  }
+}
