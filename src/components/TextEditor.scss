@@ -7,12 +7,12 @@
   &.focused {
     .ql-toolbar {
       border: 1px solid #818181; // Normal border
-      box-shadow: 0 0 0 1px #5138ee; // Ekstra kalın görünüm
+      box-shadow: 0 0 0 1px $btn-gradient-start;
     }
 
     .ql-container {
       border: 1px solid #818181; // Normal border
-      box-shadow: 0 0 0 1px #5138ee; // Ekstra kalın görünüm
+      box-shadow: 0 0 0 1px $btn-gradient-start;
       background-color: #E7F0FE;
     }
   }

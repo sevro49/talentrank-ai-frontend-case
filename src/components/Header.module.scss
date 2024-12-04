@@ -29,10 +29,12 @@
     padding: 1.5rem 15rem;
   }
 
-  // 2xl (1536px - ...)
+  // 2xl (1536px - 1799px)
   @include respond-to('2xl') {
     padding: 1.5rem 23rem;
   }
+
+  // 3xl (1800px - ...)
   @include respond-to('3xl') {
     padding: 1.5rem 30rem;
   }
