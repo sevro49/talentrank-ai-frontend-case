@@ -1,0 +1,51 @@
+@use '@/styles/variables.scss' as *;
+@use '@/styles/mixin.scss' as *;
+
+.pageContainer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: #fff;
+  border-bottom: 1px solid $primary-border;
+  box-shadow: 0 -10px 8px rgba(64, 44, 199, 0.1);
+  padding: 1rem 0; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+
+  @include respond-to('lg') {
+    justify-content: right;
+  }
+
+  .btnWrapper {
+    padding-right: 0;
+    display: flex;
+    align-items: center;
+    gap: 2rem;    
+
+    @include respond-to('lg') {
+      padding-right: 15rem;
+    }
+
+    .btnStyles {
+      padding: 1rem 2rem;
+  
+      &:hover {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        transition: all 0.5s ease;
+      }
+    }
+  
+    .draft {
+      color: black;
+      @extend .btnStyles;
+    }
+  
+    .proceed {
+      background: linear-gradient(to right, $btn-gradient-start, $btn-gradient-end);
+      color: #fff;
+      @extend .btnStyles;
+    }
+  }
+}

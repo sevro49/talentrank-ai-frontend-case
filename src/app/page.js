@@ -6,7 +6,7 @@ export default function Home() {
   return (
     <main className={homePage.pageContainer}>
       <Link href="/interview-creation/step1">
-        <Button className={homePage.startInterview}>Add Interview</Button>
+        <Button className={homePage.startInterview}>Create Interview</Button>
       </Link>
     </main>
   );
