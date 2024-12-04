@@ -5,14 +5,14 @@ import './TextEditor.scss';
 
 const ReactQuill = dynamic(() => import('react-quill-new'), { ssr: false });
 
-const TextEditor = () => {
+const TextEditor = ({ value, onChange }) => {
   const [isFocused, setIsFocused] = useState(false);
 
   return (
     <div className={`quill-container ${isFocused ? 'focused' : ''}`}>
       <ReactQuill
-        value=""
-        onChange={() => {}}
+        value={value}
+        onChange={onChange}
         theme="snow"
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}

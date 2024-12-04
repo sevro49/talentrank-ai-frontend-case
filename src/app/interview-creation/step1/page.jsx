@@ -1,7 +1,9 @@
 "use client"
 
-import React from 'react'
-import step1 from './page.module.scss'; // Import css modules stylesheet as styles
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux'; 
+import { setJobTitle, setJobDescription, setInterviewDuration, setJobLocation, validateSection1 } from '@/store/interviewSlice';
+import step1 from './page.module.scss';
 
 // Material UI
 import TextField from '@mui/material/TextField';
@@ -10,7 +12,7 @@ import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
-import FormLabel from '@mui/material/FormLabel';
+import Button from '@mui/material/Button';
 import TextEditor from '@/components/TextEditor';
 
 const interviewDuration = [
@@ -20,15 +22,18 @@ const interviewDuration = [
   { label: '30 minutes' },
   { label: '45 minutes' },
   { label: '60 minutes' },
-]
+];
 
 const jobLocation = [
   { label: 'Remote', desc: 'Work from anywhere' },
   { label: 'Hybrid', desc: 'Work from home/office' },
   { label: 'Onsite', desc: 'Work from office' },
-]
+];
 
 const Stage1 = () => {
+  const dispatch = useDispatch();
+  const { jobTitle, jobDescription, interviewDuration: selectedDuration, jobLocation: selectedLocation, isSection1Valid } = useSelector((state) => state.interview);
+
   const textAreaStyle = {
     "& .MuiOutlinedInput-root": {
       padding: "0 !important",
@@ -94,6 +99,17 @@ const Stage1 = () => {
     },
   };
 
+  // console.log(jobTitle, jobDescription, selectedDuration, selectedLocation, isSection1Valid);
+
+  useEffect(() => {
+    dispatch(validateSection1());  // form validation check
+  }, [jobTitle, jobDescription, selectedDuration, selectedLocation, dispatch]);
+
+  // TextEditor'dan gelen değişiklikleri store'a kaydediyoruz
+  const handleJobDescriptionChange = (value) => {
+    dispatch(setJobDescription(value));
+  };
+
   return (
     <section className={step1.pageContainer}>
       <div className={step1.title}>
@@ -102,57 +118,59 @@ const Stage1 = () => {
       </div>
 
       <div className={step1.jobForm}>
-        <TextField 
-          id="outlined-basic" 
-          label="Job Title" 
-          variant="outlined" 
-          fullWidth 
-          sx={textAreaStyle}/>
-        <TextEditor />
+        <TextField
+          id="outlined-basic"
+          label="Job Title"
+          variant="outlined"
+          fullWidth
+          sx={textAreaStyle}
+          required
+          value={jobTitle}
+          onChange={(e) => dispatch(setJobTitle(e.target.value))}
+        />
+        <TextEditor
+          value={jobDescription} // TextEditor'a gönderdiğimiz metin
+          onChange={handleJobDescriptionChange} // Değişiklikleri handleJobDescriptionChange fonksiyonu ile store'a kaydet
+        />
 
         <Autocomplete
           disablePortal
           options={interviewDuration}
           fullWidth
           sx={autoCompleteStyle}
-          renderInput={(params) => <TextField {...params} label="Interview Duration (AI will generate 6 questions)" />}
+          value={selectedDuration}
+          required
+          onChange={(e, newValue) => dispatch(setInterviewDuration(newValue?.label))}
+          renderInput={(params) => <TextField {...params} label="Interview Duration" />}
         />
 
         <div className={step1.jobLocation}>
           <span className={step1.jobLocationTitle}>Job Location</span>
           <FormControl>
             <RadioGroup
-              aria-labelledby="job-location-radio-buttons-group-label"
-              defaultValue="Onsite"
-              name="radio-buttons-group"
+              value={selectedLocation}
+              onChange={(e) => dispatch(setJobLocation(e.target.value))}
               className={step1.radioGroup}
             >
               {jobLocation.map((location, index) => (
-                <div key={index}>
-                  <FormControlLabel
-                    value={location.label}
-                    control={<Radio sx={{
-                      color: '#333', // Normal durumda renk
-                      '&.Mui-checked': {
-                        color: '#5138EE', // Seçili durumda renk
-                      },
-                    }}/>}
-                    label={
-                      <>
-                        <span className={step1.jobLocationType}>{location.label}</span>
-                        <div className={step1.jobLocationTypeDesc}>{location.desc}</div>
-                      </>
-                    }
-                  />
-                </div>
+                <FormControlLabel
+                  key={index}
+                  value={location.label}
+                  control={<Radio />}
+                  label={
+                    <>
+                      <span className={step1.jobLocationType}>{location.label}</span>
+                      <div className={step1.jobLocationTypeDesc}>{location.desc}</div>
+                    </>
+                  }
+                />
               ))}
             </RadioGroup>
           </FormControl>
         </div>
       </div>
-      
     </section>
-  )
-}
+  );
+};
 
-export default Stage1
+export default Stage1;

@@ -166,6 +166,10 @@
           @extend .multiline-clamp;
         }
       }
+
+      .completedStage {
+        border: 1px solid green;
+      }
   
       .divider {
         width: 150px;

@@ -1,4 +1,5 @@
 import "@/styles/globals.scss" // Import global styles
+import StoreProvider from "./StoreProvider";
 
 export const metadata = {
   title: "Talentrank.ai Frontend Case | Emre Güler", 
@@ -9,7 +10,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        {children}
+        <StoreProvider>
+          {children}
+        </StoreProvider>
       </body>
     </html>
   );
