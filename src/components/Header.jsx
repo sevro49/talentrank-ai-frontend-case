@@ -21,27 +21,28 @@ const Header = () => {
   
   return (
     <header className={header.headerContainer}>
-      <Link href="/">
-        <Button className={header.customButton} variant="text"><KeyboardArrowLeftIcon className={header.icon} /> Back</Button>
-      </Link>
 
-      {/* Stages */}
-      <div className={header.stages}>
-        {stages.map(({ title, desc, step }, index) => (
-          <React.Fragment key={index}>
-            <div 
-              className={`${header.stage} ${currentStep === step ? header.activeStage : ''}`}>
-              <h3>{title}</h3>
-              <p>{desc}</p>
-            </div>
+      <div className={header.stagesWrapper}>
+        <Link href="/" className={header.customButtonLink}>
+          <Button className={header.customButton} variant="text"><KeyboardArrowLeftIcon className={header.icon} /> Back</Button>
+        </Link>
 
-            {/* Add divider after each stage except the last one */}
-            {index < stages.length - 1 && <div className={header.divider}></div>}
-          </React.Fragment>
-        ))}
+        {/* Stages */}
+        <div className={header.stages}>
+          {stages.map(({ title, desc, step }, index) => (
+            <React.Fragment key={index}>
+              <div 
+                className={`${header.stage} ${currentStep === step ? header.activeStage : ''}`}>
+                <h3>{title}</h3>
+                <p>{desc}</p>
+              </div>
+
+              {/* Add divider after each stage except the last one */}
+              {index < stages.length - 1 && <div className={header.divider}></div>}
+            </React.Fragment>
+          ))}
+        </div>
       </div>
-
-      <div></div>
     </header>
   )
 }
