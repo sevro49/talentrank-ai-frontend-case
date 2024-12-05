@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux'; 
 import { Button, Card, CardActions, CardContent, CardHeader, Slider, TextField } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation';
 import { useSearchParams } from 'next/navigation';
 import step3 from './page.module.scss'
 
-const Stage3 = () => {
+const Stage3Edit = () => {
   const router = useRouter(); 
   const { jobTitle, jobDescription, interviewDuration, questions } = useSelector((state) => state.interview);
 
@@ -167,4 +167,4 @@ const Stage3 = () => {
   );
 };
 
-export default Stage3;
+export default Stage3Edit;

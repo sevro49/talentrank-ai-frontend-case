@@ -17,7 +17,7 @@ import {
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 import { addQuestion, reorderQuestions, validateSection2, setQuestions } from '../../../../store/interviewSlice';
-import { SortableItem } from './SortableItem';
+import { SortableItemEdit } from './SortableItem';
 
 import step2 from './page.module.scss'
 
@@ -109,7 +109,7 @@ const Stage2Edit = () => {
             strategy={verticalListSortingStrategy}
           >
             {questions?.map((question, index) => (
-              <SortableItem
+              <SortableItemEdit
                 key={question.id}
                 setQuestionText={setQuestionText}
                 setQuestionWeightage={setQuestionWeightage}

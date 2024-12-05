@@ -8,7 +8,7 @@ import step2 from './page.module.scss';
 import { removeQuestion, setQuestions } from '../../../../store/interviewSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
-export const SortableItem = ({ id, number, setQuestionWeightage, setQuestionText }) => {
+export const SortableItemEdit = ({ id, number, setQuestionWeightage, setQuestionText }) => {
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id });
   const dispatch = useDispatch();
   const questions = useSelector((state) => state.interview.questions);
