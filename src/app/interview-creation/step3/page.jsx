@@ -2,9 +2,10 @@
 
 import React from 'react'
 import step3 from './page.module.scss'
-import { useDispatch, useSelector } from 'react-redux'; 
+import { useSelector } from 'react-redux'; 
 import { Button, Card, CardActions, CardContent, CardHeader, Slider, TextField } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
+import { useRouter } from 'next/navigation';
 
 const Stage3 = () => {
   const textAreaStyle = {
@@ -38,10 +39,12 @@ const Stage3 = () => {
       },
     },
   };
-  const dispatch = useDispatch();
+  const router = useRouter(); 
   const { jobTitle, jobDescription, interviewDuration, questions } = useSelector((state) => state.interview);
 
-  console.log(questions)
+  const handleEdit = (step) => {
+    router.push(`/interview-creation/${step}`);
+  }
 
   return (
     <section className={step3.pageContainer}>
@@ -69,7 +72,7 @@ const Stage3 = () => {
                 className={step3.jobDetailsHeader}
                 title="Job Details"
                 action={
-                  <Button>
+                  <Button onClick={() => handleEdit("step1")}>
                     <EditIcon className={step3.icon} />
                   </Button> 
                 }
@@ -97,9 +100,6 @@ const Stage3 = () => {
 
                 <span className={step3.duration}>{interviewDuration}</span>
               </CardContent>
-              <CardActions>
-                {/* <Button size="small">Learn More</Button> */}
-              </CardActions>
             </Card>
 
             {/* Interview Questions */}
@@ -108,7 +108,7 @@ const Stage3 = () => {
                 className={step3.interviewQuestionsHeader}
                 title="Questions"
                 action={
-                  <Button>
+                  <Button onClick={() => handleEdit("step2")}>
                     <EditIcon className={step3.icon} />
                   </Button> 
                 }
