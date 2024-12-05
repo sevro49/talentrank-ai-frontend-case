@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState, Suspense } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux'; 
 import { setJobTitle, setJobDescription, setInterviewDuration, setJobLocation, setQuestions, validateSection1 } from '../../../../store/interviewSlice';
 import step1 from './page.module.scss';
@@ -205,12 +205,4 @@ const Stage1Edit = () => {
   );
 };
 
-const Page = () => {
-  return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <Stage1Edit />
-    </Suspense>
-  );
-};
-
-export default Page;
+export default Stage1Edit;
