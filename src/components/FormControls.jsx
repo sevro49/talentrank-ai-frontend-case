@@ -50,6 +50,10 @@ const FormControls = () => {
     router.push(previousStep[currentStep] || "/interview-creation/step1");
   };
 
+  const handlePublish = () => {
+
+  }
+
   return (
     <section className={formControls.pageContainer}>
       <div className={formControls.btnWrapper}>
@@ -65,13 +69,29 @@ const FormControls = () => {
         </div>
         <div className={formControls.proceedWrapper}>
           <Button className={formControls.draft}>DRAFT</Button>
-          <Button
+          {currentStep === 'step3' 
+            ? (
+              <Button
+                className={formControls.proceed}
+                onClick={handlePublish}
+              >
+                PUBLISH
+              </Button>) 
+            : (
+              <Button
+                className={formControls.proceed}
+                onClick={handleProceed}
+                disabled={!validationMap[currentStep]?.isValid} // inactive button if not valid
+              >
+                PROCEED
+              </Button>)}
+          {/* <Button
             className={formControls.proceed}
             onClick={handleProceed}
             disabled={!validationMap[currentStep]?.isValid} // inactive button if not valid
           >
             PROCEED
-          </Button>
+          </Button> */}
         </div>
       </div>
     </section>

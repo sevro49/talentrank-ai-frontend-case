@@ -8,7 +8,6 @@ const initialState = {
   jobLocation: 'Onsite',  // default value
   isSection1Valid: false,
   isSection2Valid: false,
-  isSection3Valid: false,
 
   // Stage 2
   questions: [], // array of questions
