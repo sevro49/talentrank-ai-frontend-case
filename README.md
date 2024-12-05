@@ -1,36 +1,39 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# TalentRank AI Frontend Developer | Case
+[Live Demo (Vercel)](https://talentrank-ai-frontend-case.vercel.app/)
+## 🚀 Özellikler
 
-## Getting Started
+- **Interview Management:** İş görüşmeleri için bilgi giriş ve düzenleme modülleri.
+- **Firebase Entegrasyonu:** Veritabanı işlemleri (okuma/yazma) ve gerçek zamanlı güncellemeler.
+- **Redux Store Kullanımı:** Uygulama durum yönetimi.
+- **Drag & Drop Özelliği:** Kullanıcı deneyimini geliştirmek için sürükle-bırak mekanizmaları.
+- **Responsive Tasarım:** Mobil ve masaüstü cihazlar için optimize edilmiş kullanıcı arayüzü.
+- **Zengin Metin Düzenleyici:** İş tanımları ve açıklamalar için özelleştirilebilir bir metin düzenleme aracı.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🛠️ Kullanılan Teknolojiler
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### **Frontend Çerçevesi**
+- [Next.js](https://nextjs.org/) (v15): React tabanlı bir framework.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+### **Durum Yönetimi**
+- [Redux Toolkit](https://redux-toolkit.js.org/): Redux işlemlerini kolaylaştırmak için.
+- [React Redux](https://react-redux.js.org/): Redux ile React arasında entegrasyon.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### **UI Kütüphanesi**
+- [Material UI](https://mui.com/): Kullanıcı arayüzü bileşenleri.
+- [Emotion](https://emotion.sh/): Stiller için CSS-in-JS çözümü.
 
-## Learn More
+### **Sürükle ve Bırak**
+- [Dnd Kit](https://dndkit.com/): Liste öğelerini sürüklemek ve sıralamak için.
 
-To learn more about Next.js, take a look at the following resources:
+### **Veritabanı ve Arka Uç**
+- [Firebase](https://firebase.google.com/): Realtime Database ve Firestore kullanılarak veri depolama.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### **Metin Düzenleyici**
+- [React Quill New](https://www.npmjs.com/package/react-quill-new): Zengin metin düzenleme.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### **Stil**
+- [Sass](https://sass-lang.com/): Gelişmiş CSS yazımı.
+- [Sass Loader](https://github.com/webpack-contrib/sass-loader): Next.js içinde Sass entegrasyonu.
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
