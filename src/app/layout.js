@@ -1,4 +1,4 @@
-import "@/styles/globals.scss" // Import global styles
+import "../styles/globals.scss" // Import global styles
 import StoreProvider from "./StoreProvider";
 
 export const metadata = {

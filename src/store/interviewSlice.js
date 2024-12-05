@@ -35,13 +35,19 @@ const interviewSlice = createSlice({
       state.jobLocation = action.payload;
     },
     setQuestions: (state, action) => {
-      state.questions = action.payload;  // sorular ekleniyor
+      state.questions = action.payload;  // save questions
     },
     addQuestion: (state, action) => {
-      state.questions.push(action.payload); // yeni soru ekleniyor
+      state.questions.push(action.payload); // add new question Card
+    },
+    removeQuestion: (state, action) => {
+      state.questions = state.questions.filter((_, index) => index !== action.payload);
+    },
+    reorderQuestions: (state, action) => {
+      state.questions = action.payload;
     },
     validateSection1: (state) => {
-      // form validation kontrolü
+      // form validation
       state.isSection1Valid = (
         state.jobTitle !== '' &&
         state.jobDescription !== '' &&
@@ -49,8 +55,15 @@ const interviewSlice = createSlice({
         state.jobLocation !== '' 
       );
     },
+    validateSection2: (state) => {
+      state.isSection2Valid = (
+        state.questions.length > 0 && // at least one question
+        (state.questions.every(
+          (q) => q.text.trim() !== '' && q.weightage !== null // all questions have text and weightage
+      )));
+    },
     setSummary: (state) => {
-      // Özet oluşturma
+      // create summary object
       state.summary = {
         jobTitle: state.jobTitle,
         jobDescription: state.jobDescription,
@@ -62,6 +75,6 @@ const interviewSlice = createSlice({
   },
 });
 
-export const { setJobTitle, setJobDescription, setInterviewDuration, setJobLocation, setQuestions, addQuestion, validateSection1, setSummary } = interviewSlice.actions;
+export const { setJobTitle, setJobDescription, setInterviewDuration, setJobLocation, setQuestions, addQuestion, validateSection1, validateSection2, setSummary, removeQuestion, reorderQuestions } = interviewSlice.actions;
 
 export default interviewSlice.reducer;

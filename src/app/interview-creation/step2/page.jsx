@@ -1,49 +1,68 @@
-import React from 'react'
+'use client'
+
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  DndContext, 
+  closestCenter,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+} from '@dnd-kit/core';
+import {
+  arrayMove,
+  SortableContext,
+  sortableKeyboardCoordinates,
+  verticalListSortingStrategy,
+} from '@dnd-kit/sortable';
+import { addQuestion, reorderQuestions, validateSection2 } from '../../../store/interviewSlice';
+import {SortableItem} from './SortableItem';
+
 import step2 from './page.module.scss'
 
 // Material UI
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import CardHeader from '@mui/material/CardHeader';
 import { Button } from '@mui/material';
-import TextField from '@mui/material/TextField';
-import EditIcon from '@mui/icons-material/Edit';
-import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
-import Slider from '@mui/material/Slider';
+import AddIcon from '@mui/icons-material/Add';
 
-const page = () => {
-  const textAreaStyle = {
-    "& .MuiOutlinedInput-root": {
-      padding: "0 !important",
-      "& fieldset": {
-        borderColor: "#818181", // unfocused border
-      },
-      "&.Mui-focused fieldset": {
-        borderColor: "#5138EE", // focused border
-      },
-      "&.Mui-focused .MuiInputBase-input": {
-        backgroundColor: "#E7F0FE", // focused bg
-      },    
-      "& .MuiInputBase-inputMultiline": {
-        padding: "16.5px 14px", 
-        overflowY: "scroll",
-        scrollbarWidth: "none", // hide for Firefox
-        "&::-webkit-scrollbar": {
-          display: "none", // hide for webkit browsers
-        },
-      },
-      "&.Mui-focused .MuiInputBase-inputMultiline": {
-        backgroundColor: "#E7F0FE",
-      }
-    },
-  
-    '& .MuiInputLabel-root': {
-      '&.Mui-focused': {
-        color: '#818181', // focused label color
-      },
-    },
+const Stage2 = () => {
+  const dispatch = useDispatch();
+  const questions = useSelector((state) => state.interview.questions);
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  );
+  const [questionText , setQuestionText] = useState('');
+  const [questionWeightage , setQuestionWeightage] = useState(2);
+
+  const handleDragEnd = (event) => {
+    const { active, over } = event;
+    if (active.id !== over.id) {
+      const oldIndex = questions.findIndex((q) => q.id === active.id);
+      const newIndex = questions.findIndex((q) => q.id === over.id);
+      const newQuestions = arrayMove(questions, oldIndex, newIndex);
+      dispatch(reorderQuestions(newQuestions));
+    }
   };
+
+  const handleAddQuestion = () => {
+    const newQuestion = { 
+      id: Date.now().toString(), 
+      text: '', 
+      weightage: 2
+    };
+    dispatch(addQuestion(newQuestion)); // add new question Card
+  
+    // Reset the local state
+    setQuestionText(''); 
+    setQuestionWeightage(2); 
+  };
+
+  useEffect(() => {
+    dispatch(validateSection2());  // form validation check
+  }, [questions, questionText, questionWeightage, dispatch]);
 
   return (
     <section className={step2.pageContainer}>
@@ -53,60 +72,28 @@ const page = () => {
       </div>
 
       <div className={step2.questionForm}>
-        <Card className={step2.card}>
-          <CardHeader
-            className={step2.cardHeader}
-            title="question 1"
-            action={
-              <Button>
-                <EditIcon className={step2.icon} />
-              </Button> 
-            }
-            sx={{
-              '.MuiCardHeader-title': {
-                fontSize: '1rem', // Küçük ekranlar için varsayılan font size
-          
-                // Custom breakpoint (örneğin 640px ve üstü)
-                '@media (min-width: 640px)': {
-                  fontSize: '1.5rem', // 640px ve üstü ekranlar için font size
-                },
-              },
-            }}
-          />
-          <CardContent className={step2.cardContent}>
-            <DragIndicatorIcon className={step2.icon} />
-            <TextField 
-              variant="outlined"
-              multiline
-              sx={textAreaStyle} 
-              rows={4}
-              fullWidth
-              className={step2.questionTextArea}/>
-          </CardContent>
-          <CardActions className={step2.cardActions}>
-            <div className={step2.weightage}>
-              <span className={step2.weightageLabel}>Weightage Score:</span>
-              <Slider
-                aria-label="weightage score"
-                defaultValue={2}
-                className={step2.slider}
-                valueLabelDisplay="auto"
-                step={1}
-                min={0}
-                max={3}
-                
-              />
-            </div>
-            <div className={step2.remove}>
-              <Button sx={{ textTransform: 'none' }}>
-                Remove
-              </Button> 
-            </div>
-          </CardActions>
-        </Card>
+        <DndContext 
+            sensors={sensors}
+            collisionDetection={closestCenter}
+            onDragEnd={handleDragEnd}
+        >
+          <SortableContext 
+            items={questions}
+            strategy={verticalListSortingStrategy}
+          >
+            {questions?.map((question, index) => (
+              <SortableItem key={question.id} setQuestionText={setQuestionText} setQuestionWeightage={setQuestionWeightage} questionText={questionText} questionWeightage={questionWeightage} id={question.id} number={index + 1} />
+            ))}
+          </SortableContext>
+        </DndContext>
+
+        {/* Add button */}
+        <Button onClick={handleAddQuestion} className={step2.addButton}>
+          <AddIcon className={step2.icon} />
+        </Button> 
       </div>
     </section>
   )
 }
 
-export default page
+export default Stage2

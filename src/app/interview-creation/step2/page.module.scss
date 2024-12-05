@@ -1,8 +1,8 @@
-@use '@/styles/variables.scss' as *;
-@use '@/styles/mixin.scss' as *;
+@use '../../../styles/variables.scss' as *;
+@use '../../../styles/mixin.scss' as *;
 
 .pageContainer {
-  margin: 0 0 5rem 0;
+  margin: 0 0 7rem 0;
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -72,18 +72,21 @@
         }
 
         & .MuiCardHeader-title {
-          font-size: 0.8rem; // Küçük ekranlar için varsayılan
+          font-size: 0.8rem;
         }
       
         @include respond-to('sm') {
           & .MuiCardHeader-title {
-            font-size: 1.2rem; // SM ve daha büyük ekranlar için
+            font-size: 1.2rem;
           }
         }
 
         button {
           padding-right: 0;
           padding-left: 0;
+          pointer-events: none;
+          display: flex;
+          justify-content: end;
 
           .icon {
             color: #818181;
@@ -98,6 +101,10 @@
 
         @include respond-to('sm') {
           padding: 1rem 2rem;
+        }
+
+        .icon {
+          cursor: pointer;
         }
       }
 
@@ -128,7 +135,7 @@
           }
 
           .slider {
-            color: #5138EE !important;
+            color: $btn-gradient-start !important;
             width: 100px;
 
             @include respond-to('sm') {
@@ -150,6 +157,17 @@
             }
           }
         }
+      }
+    }
+
+    .addButton {
+      color: $btn-gradient-start;
+      border: 1px solid $btn-gradient-start;
+      background-color: white;
+
+      &:hover {
+        background-color: $btn-gradient-start;
+        color: white;
       }
     }
   }
