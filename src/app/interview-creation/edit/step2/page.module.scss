@@ -1,0 +1,174 @@
+@use '../../../../styles/variables.scss' as *;
+@use '../../../../styles/mixin.scss' as *;
+
+.pageContainer {
+  margin: 0 0 7rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  justify-content: center;
+  align-items: center;
+  padding: 1.5rem 1rem;
+  background-color: $main-bg;
+
+  // sm (640px - 767px)
+  @include respond-to('sm') {
+    padding: 1.5rem 4rem;
+  }
+
+  // md (768px - 1023px)
+  @include respond-to('md') {
+    padding: 1.5rem 8rem;
+  }
+
+  // lg (1024px - 1279px)
+  @include respond-to('lg') {
+    padding: 1.5rem 12rem;
+  }
+
+  // xl (1280px - 1535px)
+  @include respond-to('xl') {
+    padding: 1.5rem 18rem;
+  }
+
+  // 2xl (1536px - 1799px
+  @include respond-to('2xl') {
+    padding: 1.5rem 22rem;
+  }
+
+  // 3xl (1800px - ...)
+  @include respond-to('3xl') {
+    padding: 1.5rem 30rem;
+  }
+
+  .title {
+    display: flex;
+    flex-direction: column;
+
+    h1, p {
+      margin: 0;
+      text-align: center;
+    }
+  }
+
+  .questionForm {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+
+    .card {
+      background-color: white;
+
+      .cardHeader {
+        display: flex;
+        // align-self: center;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 0.5rem;
+
+        @include respond-to('sm') {
+          padding: 1rem 2rem;
+        }
+
+        & .MuiCardHeader-title {
+          font-size: 0.8rem;
+        }
+      
+        @include respond-to('sm') {
+          & .MuiCardHeader-title {
+            font-size: 1.2rem;
+          }
+        }
+
+        button {
+          padding-right: 0;
+          padding-left: 0;
+          pointer-events: none;
+          display: flex;
+          justify-content: end;
+
+          .icon {
+            color: #818181;
+          }
+        }
+      }
+
+      .cardContent {
+        display: flex;
+        gap: .5rem;
+        padding: 1rem 1rem 1rem 0.5rem;
+
+        @include respond-to('sm') {
+          padding: 1rem 2rem;
+        }
+
+        .icon {
+          cursor: pointer;
+        }
+      }
+
+      .cardActions {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 0.5rem;
+
+        @include respond-to('sm') {
+          padding: 1rem 2rem;
+        }
+
+        .weightage {
+          width: 100%;
+          display: flex;
+          // flex-direction: column;
+
+          .weightageLabel {
+            width: 80px;
+            font-size: .8rem;
+            font-weight: bold;
+
+            @include respond-to('sm') {
+              width: 95px;
+              font-size: 1rem;
+            }
+          }
+
+          .slider {
+            color: $btn-gradient-start !important;
+            width: 100px;
+
+            @include respond-to('sm') {
+              width: 200px;
+            }
+          }
+        }
+
+        .remove {
+          button {
+            color: red;
+            border: 1px solid red;
+            border-radius: 10px;
+            padding: 0.3rem 1.5rem;
+            font-size: .8rem;
+
+            @include respond-to('sm') {
+              font-size: .875rem;
+            }
+          }
+        }
+      }
+    }
+
+    .addButton {
+      color: $btn-gradient-start;
+      border: 1px solid $btn-gradient-start;
+      background-color: white;
+
+      &:hover {
+        background-color: $btn-gradient-start;
+        color: white;
+      }
+    }
+  }
+}

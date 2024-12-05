@@ -1,0 +1,218 @@
+@use '../../../../styles/variables.scss' as *;
+@use '../../../../styles/mixin.scss' as *;
+
+.pageContainer {
+  margin: 0 0 7rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  justify-content: center;
+  align-items: center;
+  padding: 1.5rem 1rem;
+  background-color: $main-bg;
+
+  // sm (640px - 767px)
+  @include respond-to('sm') {
+    padding: 1.5rem 4rem;
+  }
+
+  // md (768px - 1023px)
+  @include respond-to('md') {
+    padding: 1.5rem 8rem;
+  }
+
+  // lg (1024px - 1279px)
+  @include respond-to('lg') {
+    padding: 1.5rem 12rem;
+  }
+
+  // xl (1280px - 1535px)
+  @include respond-to('xl') {
+    padding: 1.5rem 18rem;
+  }
+
+  // 2xl (1536px - 1799px
+  @include respond-to('2xl') {
+    padding: 1.5rem 22rem;
+  }
+
+  // 3xl (1800px - ...)
+  @include respond-to('3xl') {
+    padding: 1.5rem 30rem;
+  }
+
+  .summaryWrapper{
+    width: 100%;
+    
+    .card {
+      padding: 0;
+
+      @include respond-to('sm') {
+        padding: 1rem 2rem;
+      }
+
+      .cardContent{
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+
+        .jobDetails, .interviewQuestions {
+          border: 1px solid $btn-gradient-start;
+
+          .jobDetailsHeader, .interviewQuestionsHeader {
+            border-bottom: 1px solid #e5e5e5;
+          }
+        }
+
+        .jobDetails {
+          .jobDetailsHeader {
+            button {
+              .icon {
+                color: #818181;
+              }
+            }
+          }
+          .jobDetailsContent {
+            font-size: 1rem;
+            font-weight: bold;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 2rem;
+          
+            @include respond-to('sm') {
+              font-size: 1.2rem;
+            }
+          
+            .jobTitleWrapper, .jobDescriptionWrapper {
+              .jobTitle, .descriptionTitle {
+                margin: 0;
+              }
+          
+              .job, .description {
+                font-weight: normal;
+                color: #818181;
+                font-size: 0.9rem;
+                margin: 0;
+              }
+            }
+
+            .jobDescriptionWrapper {
+              p {
+                word-break: break-all;
+              }
+            }
+
+            .duration {
+              font-weight: normal;
+              color: #818181;
+              font-size: 0.9rem;
+              margin: 0;
+            }
+          }
+        }
+
+        .interviewQuestions {
+          .interviewQuestionsHeader {
+            text-align: center;
+
+            button {
+              .icon {
+                color: #818181;
+              }
+            }
+          }
+
+          .questionsWrapper {
+            max-height: 80vh;
+            overflow-y: auto;
+            scrollbar-width: none; /* Firefox için scrollbar'ı gizle */
+            padding: 2rem 0 2rem 0;
+
+            @include respond-to('sm') {
+              padding: 2rem 1rem 2rem 1rem;
+            }
+            
+            &::-webkit-scrollbar {
+              display: none; /* Webkit tabanlı tarayıcılar (Chrome, Safari) için scrollbar'ı gizle */
+            }
+
+            .interviewQuestionsContent:last-child{
+              padding-bottom: 0;
+            }
+
+            .interviewQuestionsContent:first-child{
+              padding-top: 0;
+            }
+          
+            .interviewQuestionsContent {
+  
+              .card {
+                padding: 0 1rem 1rem 1rem;
+                .cardHeader {
+                  padding: 1rem 0;
+                }
+                .cardContent {
+                  .questionTextArea div{
+                    border: 1px solid #333;
+                    border-radius: 4px;
+                    
+                    textarea {
+                      -webkit-text-fill-color: #333;
+                    }
+                  }
+                }
+  
+                .cardActions {
+                  display: flex;
+                  justify-content: start;
+                  
+                  padding: .5rem 0 !important;
+          
+                  @include respond-to('sm') {
+                    padding: 1rem 2rem;
+                  }
+          
+                  .weightage {
+                    width: 100%;
+                    display: flex;
+                    // flex-direction: column;
+          
+                    .weightageLabel {
+                      width: 80px;
+                      font-size: .8rem;
+                      font-weight: bold;
+                      text-align: center;
+          
+                      @include respond-to('sm') {
+                        width: 110px;
+                        font-size: 1rem;
+                      }
+                    }
+          
+                    .slider {
+                      color: #818181 !important;
+                      width: 100px;
+          
+                      @include respond-to('sm') {
+                        width: 150px;
+                      }
+                      @include respond-to('md') {
+                        width: 200px;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    
+  }
+
+  
+
+}

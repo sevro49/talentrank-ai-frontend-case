@@ -1,8 +1,8 @@
-"use client"
+"use client";
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux'; 
-import { setJobTitle, setJobDescription, setInterviewDuration, setJobLocation, validateSection1 } from '../../../store/interviewSlice';
+import { setJobTitle, setJobDescription, setInterviewDuration, setJobLocation, setQuestions, validateSection1 } from '../../../../store/interviewSlice';
 import step1 from './page.module.scss';
 
 // Material UI
@@ -12,7 +12,12 @@ import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
-import TextEditor from '../../../components/TextEditor';
+import TextEditor from '../../../../components/TextEditor';
+
+// Firebase imports
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../../../../../firebase"; // Firebase yapılandırma dosyasını içe aktarın
+import { useSearchParams } from 'next/navigation';
 
 const interviewDuration = [
   { label: '10 minutes' },
@@ -29,9 +34,12 @@ const jobLocation = [
   { label: 'Onsite', desc: 'Work from office' },
 ];
 
-const Stage1 = () => {
+const Stage1Edit = () => {
   const dispatch = useDispatch();
-  const { jobTitle, jobDescription, interviewDuration: selectedDuration, jobLocation: selectedLocation } = useSelector((state) => state.interview);
+  const { jobTitle, jobDescription, interviewDuration: selectedDuration, jobLocation: selectedLocation, questions } = useSelector((state) => state.interview);
+  const [loading, setLoading] = useState(true);  // Loading state while fetching data
+  const searchParams = useSearchParams();
+  const interviewId = searchParams.get('id'); // get the 'id' parameter
 
   const textAreaStyle = {
     "& .MuiOutlinedInput-root": {
@@ -99,18 +107,44 @@ const Stage1 = () => {
   };
 
   useEffect(() => {
-    dispatch(validateSection1());  // form validation check
+    // validation
+    dispatch(validateSection1());
   }, [jobTitle, jobDescription, selectedDuration, selectedLocation, dispatch]);
 
-  // save job description to the store
+  useEffect(() => {
+    if (interviewId) {
+      const fetchInterviewData = async () => {
+        setLoading(true);  // set the loading state to true while fetching data
+        const docRef = doc(db, "interviews", interviewId);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          const interviewData = docSnap.data();
+
+          // save data to the redux store
+          dispatch(setJobTitle(interviewData.jobTitle));
+          dispatch(setJobDescription(interviewData.jobDescription));
+          dispatch(setInterviewDuration(interviewData.interviewDuration));
+          dispatch(setJobLocation(interviewData.jobLocation));
+          dispatch(setQuestions(interviewData.questions));
+        } else {
+          console.log("No such document!");
+        }
+        setLoading(false);  // set the loading state to false after fetching data
+      };
+      fetchInterviewData();
+    }
+  }, [interviewId, dispatch]);
+
   const handleJobDescriptionChange = (value) => {
     dispatch(setJobDescription(value));
   };
 
+  if (loading) return <div>Loading...</div>; // show loading message while fetching data
+
   return (
     <section className={step1.pageContainer}>
       <div className={step1.title}>
-        <h1>Create New Interview</h1>
+        <h1>Edit Interview</h1>
         <p>Job Description Details</p>
       </div>
 
@@ -126,8 +160,8 @@ const Stage1 = () => {
           onChange={(e) => dispatch(setJobTitle(e.target.value))}
         />
         <TextEditor
-          value={jobDescription} // TextEditor'a gönderdiğimiz metin
-          onChange={handleJobDescriptionChange} // Değişiklikleri handleJobDescriptionChange fonksiyonu ile store'a kaydet
+          value={jobDescription}
+          onChange={handleJobDescriptionChange}
         />
 
         <Autocomplete
@@ -145,6 +179,7 @@ const Stage1 = () => {
           <span className={step1.jobLocationTitle}>Job Location</span>
           <FormControl>
             <RadioGroup
+              key={`radio-${selectedLocation}`}
               value={selectedLocation}
               onChange={(e) => dispatch(setJobLocation(e.target.value))}
               className={step1.radioGroup}
@@ -170,4 +205,4 @@ const Stage1 = () => {
   );
 };
 
-export default Stage1;
+export default Stage1Edit;
