@@ -1,5 +1,5 @@
-import FormControls from "@/components/FormControls";
-import Header from "@/components/Header";
+import FormControls from "../../components/FormControls";
+import Header from "../../components/Header";
 
 export default function InterviewCreationLayout({ children }) {
   return (

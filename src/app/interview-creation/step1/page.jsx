@@ -2,7 +2,7 @@
 
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux'; 
-import { setJobTitle, setJobDescription, setInterviewDuration, setJobLocation, validateSection1 } from '@/store/interviewSlice';
+import { setJobTitle, setJobDescription, setInterviewDuration, setJobLocation, validateSection1 } from '../../../store/interviewSlice';
 import step1 from './page.module.scss';
 
 // Material UI
@@ -12,7 +12,7 @@ import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
-import TextEditor from '@/components/TextEditor';
+import TextEditor from '../../../components/TextEditor';
 
 const interviewDuration = [
   { label: '10 minutes' },
@@ -98,13 +98,11 @@ const Stage1 = () => {
     },
   };
 
-  // console.log(jobTitle, jobDescription, selectedDuration, selectedLocation, isSection1Valid);
-
   useEffect(() => {
     dispatch(validateSection1());  // form validation check
   }, [jobTitle, jobDescription, selectedDuration, selectedLocation, dispatch]);
 
-  // TextEditor'dan gelen değişiklikleri store'a kaydediyoruz
+  // save job description to the store
   const handleJobDescriptionChange = (value) => {
     dispatch(setJobDescription(value));
   };

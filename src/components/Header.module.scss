@@ -1,5 +1,5 @@
-@use '@/styles/variables.scss' as *;
-@use '@/styles/mixin.scss' as *;
+@use '../styles/variables.scss' as *;
+@use '../styles/mixin.scss' as *;
 
 .headerContainer {
   background-color: #fff;
@@ -170,7 +170,7 @@
       }
 
       .completedStage {
-        border: 1px solid green;
+        border: 2px solid green;
       }
   
       .divider {
