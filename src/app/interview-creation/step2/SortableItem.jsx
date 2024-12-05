@@ -72,7 +72,7 @@ export const SortableItem = ({ id, number, setQuestionWeightage, setQuestionText
 
   return (
     <div ref={setNodeRef} style={style} {...attributes} >
-      <Card className={step2.card}>
+        <Card className={step2.card}>
           <CardHeader
             className={step2.cardHeader}
             title={`Question ${number}`}
@@ -84,6 +84,7 @@ export const SortableItem = ({ id, number, setQuestionWeightage, setQuestionText
             sx={{
               '.MuiCardHeader-title': {
                 fontSize: '1rem',
+                fontWeight: 'bold',
           
                 '@media (min-width: 640px)': {
                   fontSize: '1.5rem',
@@ -98,7 +99,7 @@ export const SortableItem = ({ id, number, setQuestionWeightage, setQuestionText
               multiline
               sx={textAreaStyle} 
               defaultValue={questions[number - 1].text}
-              rows={4}
+              rows={6}
               fullWidth
               onChange= {handleTextInputChange}
               className={step2.questionTextArea}/>
