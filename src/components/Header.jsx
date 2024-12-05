@@ -19,7 +19,6 @@ const stages = [
 const Header = () => {
   const pathname = usePathname();
   const currentStep = pathname.split('/').pop();
-  // console.log(currentStep)
 
   const { isSection1Valid, isSection2Valid, isSection3Valid } = useSelector((state) => state.interview);
 

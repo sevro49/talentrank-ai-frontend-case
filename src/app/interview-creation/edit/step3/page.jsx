@@ -1,13 +1,20 @@
-"use client"
+"use client";
 
-import React from 'react'
-import step3 from './page.module.scss'
+import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux'; 
 import { Button, Card, CardActions, CardContent, CardHeader, Slider, TextField } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import { useRouter } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
+import step3 from './page.module.scss'
 
 const Stage3 = () => {
+  const router = useRouter(); 
+  const { jobTitle, jobDescription, interviewDuration, questions } = useSelector((state) => state.interview);
+
+  const searchParams = useSearchParams();
+  const interviewId = searchParams.get('id');
+
   const textAreaStyle = {
     "& .MuiOutlinedInput-root": {
       padding: "0 !important",
@@ -39,12 +46,10 @@ const Stage3 = () => {
       },
     },
   };
-  const router = useRouter(); 
-  const { jobTitle, jobDescription, interviewDuration, questions } = useSelector((state) => state.interview);
 
   const handleEdit = (step) => {
-    router.push(`/interview-creation/${step}`);
-  }
+    router.push(`/interview-creation/edit/${step}`);
+  };
 
   return (
     <section className={step3.pageContainer}>
@@ -57,22 +62,17 @@ const Stage3 = () => {
               '.MuiCardHeader-title': {
                 fontSize: '1rem',
                 fontWeight: 'bold',
-          
-                '@media (min-width: 640px)': {
-                  fontSize: '1.5rem',
-                },
               },
             }}
           />
           <CardContent className={step3.cardContent}>
-
             {/* Job Details */}
             <Card className={step3.jobDetails}>
               <CardHeader
                 className={step3.jobDetailsHeader}
                 title="Job Details"
                 action={
-                  <Button onClick={() => handleEdit("step1")}>
+                  <Button onClick={() => handleEdit(`step1?id=${interviewId}`)}>
                     <EditIcon className={step3.icon} />
                   </Button> 
                 }
@@ -80,10 +80,6 @@ const Stage3 = () => {
                   '.MuiCardHeader-title': {
                     fontSize: '1rem',
                     fontWeight: 'bold',
-              
-                    '@media (min-width: 640px)': {
-                      fontSize: '1.2rem',
-                    },
                   },
                 }}
               />
@@ -108,7 +104,7 @@ const Stage3 = () => {
                 className={step3.interviewQuestionsHeader}
                 title="Questions"
                 action={
-                  <Button onClick={() => handleEdit("step2")}>
+                  <Button onClick={() => handleEdit(`step2?id=${interviewId}`)}>
                     <EditIcon className={step3.icon} />
                   </Button> 
                 }
@@ -116,60 +112,51 @@ const Stage3 = () => {
                   '.MuiCardHeader-title': {
                     fontSize: '1rem',
                     fontWeight: 'bold',
-              
-                    '@media (min-width: 640px)': {
-                      fontSize: '1.2rem',
-                    },
                   },
                 }}
               />
-
               <div className={step3.questionsWrapper}>
-                {questions.map((question, index) => (
-                <CardContent key={question.id} className={step3.interviewQuestionsContent}>
-                  <Card className={step3.card}>
-                    <CardHeader
-                      className={step3.cardHeader}
-                      title={`Question ${index + 1}`}
-                      sx={{
-                        '.MuiCardHeader-title': {
-                          fontSize: '1rem',
-                          fontWeight: 'bold',
-                    
-                          '@media (min-width: 640px)': {
-                            fontSize: '1.5rem',
+                {questions?.map((question, index) => (
+                  <CardContent key={question.id} className={step3.interviewQuestionsContent}>
+                    <Card className={step3.card}>
+                      <CardHeader
+                        className={step3.cardHeader}
+                        title={`Question ${index + 1}`}
+                        sx={{
+                          '.MuiCardHeader-title': {
+                            fontSize: '1rem',
+                            fontWeight: 'bold',
                           },
-                        },
-                      }}
-                    />
-                    <CardContent className={step3.cardContent}>
-                      <TextField 
-                        variant="outlined"
-                        multiline
-                        sx={textAreaStyle} 
-                        value={question.text}
-                        disabled
-                        rows={6}
-                        fullWidth
-                        className={step3.questionTextArea}/>
-                    </CardContent>
-                    <CardActions className={step3.cardActions}>
-                      <div className={step3.weightage}>
-                        <span className={step3.weightageLabel}>Weightage Score:</span>
-                        <Slider
-                        key={`slider-${question?.weightage}`}
-                          className={step3.slider}
-                          value={question?.weightage}  // Displaying the weightage score as value
-                          disabled  // Disabled slider (no interaction)
-                          valueLabelDisplay="auto"
-                          step={1}
-                          min={0}
-                          max={3}
+                        }}
+                      />
+                      <CardContent className={step3.cardContent}>
+                        <TextField
+                          variant="outlined"
+                          multiline
+                          sx={textAreaStyle}
+                          value={question.text}
+                          disabled
+                          rows={6}
+                          fullWidth
+                          className={step3.questionTextArea}
                         />
-                      </div>
-                    </CardActions>
-                  </Card>
-                </CardContent>
+                      </CardContent>
+                      <CardActions className={step3.cardActions}>
+                        <div className={step3.weightage}>
+                          <span className={step3.weightageLabel}>Weightage Score:</span>
+                          <Slider
+                            className={step3.slider}
+                            value={question.weightage}
+                            disabled
+                            valueLabelDisplay="auto"
+                            step={1}
+                            min={0}
+                            max={3}
+                          />
+                        </div>
+                      </CardActions>
+                    </Card>
+                  </CardContent>
                 ))}
               </div>
             </Card>
@@ -177,7 +164,7 @@ const Stage3 = () => {
         </Card>
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default Stage3
+export default Stage3;
